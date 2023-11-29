@@ -1,19 +1,28 @@
-function mudarCores() {
-    var tituloPrincipal = document.getElementById('tituloPrincipal');
+var coresMudadas = false; // Estado para verificar se as cores foram mudadas
+
+function alterarCores() {
+    var tituloPrincipal = document.querySelector('h1');
     var subtitulos = document.querySelectorAll('h2, h3');
 
-    tituloPrincipal.style.color = getRandomColor();
+    if (!coresMudadas) {
+        // Armazenar as cores originais antes de mudar
+        coresMudadas = true;
+        tituloPrincipal.dataset.corOriginal = tituloPrincipal.style.color;
+        for (var i = 0; i < subtitulos.length; i++) {
+            subtitulos[i].dataset.corOriginal = subtitulos[i].style.color;
+        }
 
-    for (var i = 0; i < subtitulos.length; i++) {
-        subtitulos[i].style.color = getRandomColor();
+        // Mudar as cores
+        tituloPrincipal.style.color = 'purple';
+        for (var i = 0; i < subtitulos.length; i++) {
+            subtitulos[i].style.color = 'brown';
+        }
+    } else {
+        // Reverter para as cores originais
+        coresMudadas = false;
+        tituloPrincipal.style.color = tituloPrincipal.dataset.corOriginal;
+        for (var i = 0; i < subtitulos.length; i++) {
+            subtitulos[i].style.color = subtitulos[i].dataset.corOriginal;
+        }
     }
-}
-
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
 }
